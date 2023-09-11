@@ -35,9 +35,9 @@ namespace AIForGames
         float cellSize;
 
         Node** nodes;
-        std::vector<Node*> path;
 
     public:
+        std::vector<Node*> path;
         int mapSize;
         void Intialise(std::vector <std::string> asciiMap, int cellSize);
 
@@ -48,6 +48,8 @@ namespace AIForGames
         std::vector<Node*> DijkstrasSearch(Node* start, Node* end);
 
         void DrawPath();
+
+        Node* GetClosestNode(glm::vec2 worldPos);
 
         ~NodeMap();
         

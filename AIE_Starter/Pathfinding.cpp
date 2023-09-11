@@ -97,7 +97,7 @@ void AIForGames::NodeMap::Draw()
 		}
 	}
 
-	if (path.empty()) return;
+
 	DrawRectangle((int)(path[0]->position.x - cellSize / 2), (int)(path[0]->position.y - cellSize / 2), (int)(cellSize - 1), (int)(cellSize - 1), MAGENTA);
 
 	DrawRectangle((int)(path[path.size()-1]->position.x - cellSize / 2), (int)(path[path.size()-1]->position.y - cellSize / 2), (int)(cellSize - 1), (int)(cellSize - 1), GREEN);
@@ -215,6 +215,17 @@ void AIForGames::NodeMap::DrawPath()
 		DrawLine(path[i]->position.x, path[i]->position.y, path[i - 1]->position.x, path[i - 1]->position.y, BLACK);
 
 	}
+}
+
+AIForGames::Node* AIForGames::NodeMap::GetClosestNode(glm::vec2 worldPos)
+{
+	int i = (int)(worldPos.x / cellSize);
+	if (i < 0 || i >= width) return nullptr;
+
+	int j = (int)(worldPos.y) / cellSize;
+	if (j < 0 || j >= height) return nullptr;
+
+	return GetNode(i, j);
 }
 
 AIForGames::NodeMap::~NodeMap()

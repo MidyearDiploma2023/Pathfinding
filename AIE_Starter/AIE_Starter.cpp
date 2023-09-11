@@ -52,6 +52,10 @@ int main(int argc, char* argv[])
     NodeMap nodeMap;
     nodeMap.Intialise(asciiMap, 50);
 
+    Node* start = nodeMap.GetNode(1, 1);
+    Node* end = nodeMap.GetNode(10, 2);
+    nodeMap.path = nodeMap.DijkstrasSearch(start, end);
+
     //std::vector<Node*> path = nodeMap.DijkstrasSearch(nodeMap.GetNode(1, 1), nodeMap.GetNode(1, 3));
 
 
@@ -62,6 +66,18 @@ int main(int argc, char* argv[])
         //----------------------------------------------------------------------------------
         // TODO: Update your variables here
         //----------------------------------------------------------------------------------
+        if (IsMouseButtonPressed(0)) {
+            Vector2 mousePos = GetMousePosition();
+            start = nodeMap.GetClosestNode(glm::vec2(mousePos.x, mousePos.y));
+            nodeMap.path = nodeMap.DijkstrasSearch(start, end);
+        }
+        if (IsMouseButtonPressed(1)) {
+            Vector2 mousePos = GetMousePosition();
+            end = nodeMap.GetClosestNode(glm::vec2(mousePos.x, mousePos.y));
+            nodeMap.path = nodeMap.DijkstrasSearch(start, end);
+        }
+        
+
 
         // Draw
         //----------------------------------------------------------------------------------
