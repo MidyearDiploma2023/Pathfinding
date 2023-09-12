@@ -51,10 +51,7 @@ void AIForGames::NodeMap::Intialise(std::vector<std::string> asciiMap, int cellS
 					node->ConnectTo(nodeNorth, 1);
 					nodeNorth->ConnectTo(node, 1);
 				}
-
 			}
-
-
 		}
 	}
 	path = DijkstrasSearch(GetNode(1, 1), GetNode(10, 2));
@@ -77,20 +74,17 @@ void AIForGames::NodeMap::Draw()
 			if (node == nullptr) {
 				DrawRectangle((int)(x * cellSize), (int)(y * cellSize), (int)(cellSize - 1), (int)(cellSize - 1), cellColor);
 			}
-			else {
+			/*else {
 				for (int i = 0; i < node->connections.size(); i++) {
 					Node* other = node->connections[i].target;
 					DrawLine((x + 0.5f) * cellSize, (y + 0.5f) * cellSize, (int)other->position.x, (int)other->position.y, lineColor);
 				}
-
-
-
-			}
+			}*/
 		}
 	}
 
-	DrawRectangle((int)(path[0]->position.x - cellSize / 2), (int)(path[0]->position.y - cellSize / 2), (int)(cellSize - 1), (int)(cellSize - 1), MAGENTA);
-	DrawRectangle((int)(path[path.size() - 1]->position.x - cellSize / 2), (int)(path[path.size() - 1]->position.y - cellSize / 2), (int)(cellSize - 1), (int)(cellSize - 1), GREEN);
+	//DrawRectangle((int)(path[0]->position.x - cellSize / 2), (int)(path[0]->position.y - cellSize / 2), (int)(cellSize - 1), (int)(cellSize - 1), MAGENTA);
+	//DrawRectangle((int)(path[path.size() - 1]->position.x - cellSize / 2), (int)(path[path.size() - 1]->position.y - cellSize / 2), (int)(cellSize - 1), (int)(cellSize - 1), GREEN);
 }
 
 std::vector<AIForGames::Node*> AIForGames::NodeMap::DijkstrasSearch(Node* start, Node* end)

@@ -25,6 +25,7 @@
 #define RAYGUI_SUPPORT_ICONS
 #include "raygui.h"
 #include "Pathfinding.h"
+#include "PathAgent.h"
 
 using namespace AIForGames;
 
@@ -41,7 +42,7 @@ int main(int argc, char* argv[])
     //--------------------------------------------------------------------------------------
     std::vector<std::string> asciiMap;
     asciiMap.push_back("0000000000000");
-    asciiMap.push_back("0101110111100");
+    asciiMap.push_back("0101110111000");
     asciiMap.push_back("0101011101110");
     asciiMap.push_back("0101000000000");
     asciiMap.push_back("0101111111110");
@@ -54,14 +55,21 @@ int main(int argc, char* argv[])
 
     Node* start = nodeMap.GetNode(1, 1);
     Node* end = nodeMap.GetNode(11, 2);
-    nodeMap.path = nodeMap.DijkstrasSearch(start, end);
 
-    //std::vector<Node*> path = nodeMap.DijkstrasSearch(nodeMap.GetNode(1, 1), nodeMap.GetNode(1, 3));
+    PathAgent agent = PathAgent(&nodeMap);
+    agent.SetNode(start);
+    agent.SetSpeed(64);
+    agent.GoToNode(end);
 
+    float time = (float)GetTime();
+    float deltaTime;
 
     // Main game loop
     while (!WindowShouldClose())    // Detect window close button or ESC key
     {
+        float fTime = (float)GetTime();
+        deltaTime = fTime - time;
+        time = fTime;
         // Update
         //----------------------------------------------------------------------------------
         // TODO: Update your variables here
@@ -69,25 +77,18 @@ int main(int argc, char* argv[])
         if (IsMouseButtonPressed(0)) {
             Vector2 mousePos = GetMousePosition();
             start = nodeMap.GetClosestNode(glm::vec2(mousePos.x, mousePos.y));
-            nodeMap.path = nodeMap.DijkstrasSearch(start, end);
-        }
-        if (IsMouseButtonPressed(1)) {
-            Vector2 mousePos = GetMousePosition();
-            end = nodeMap.GetClosestNode(glm::vec2(mousePos.x, mousePos.y));
-            nodeMap.path = nodeMap.DijkstrasSearch(start, end);
+            agent.GoToNode(start);
         }
         
-
+        agent.Update(deltaTime);
 
         // Draw
         //----------------------------------------------------------------------------------
         BeginDrawing();
 
-        ClearBackground(RAYWHITE);
+        ClearBackground(BLACK);
         nodeMap.Draw();
-        nodeMap.DrawPath();
-
-       
+        agent.Draw();
 
         EndDrawing();
         //----------------------------------------------------------------------------------

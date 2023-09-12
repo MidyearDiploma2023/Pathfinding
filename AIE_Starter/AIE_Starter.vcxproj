@@ -140,12 +140,14 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="AIE_Starter.cpp" />
+    <ClCompile Include="PathAgent.cpp" />
     <ClCompile Include="Pathfinding.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="PathAgent.h" />
     <ClInclude Include="Pathfinding.h" />
     <ClInclude Include="raygui.h" />
   </ItemGroup>
