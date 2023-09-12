@@ -141,8 +141,8 @@ std::vector<AIForGames::Node*> AIForGames::NodeMap::DijkstrasSearch(Node* start,
 
 			if (std::find(closedList.begin(), closedList.end(), currentNode->connections[i].target) == std::end(closedList))
 			{
-
-				float gScore = currentNode->gScore + currentNode->connections[i].cost;
+				float hScore = glm::length(end->position - currentNode->position) / 50;
+				float gScore = currentNode->gScore + currentNode->connections[i].cost + hScore;
 
 				if (std::find(openList.begin(), openList.end(), currentNode->connections[i].target) != std::end(openList))
 				{
