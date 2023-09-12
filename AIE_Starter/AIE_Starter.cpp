@@ -40,20 +40,20 @@ int main(int argc, char* argv[])
     SetTargetFPS(60);
     //--------------------------------------------------------------------------------------
     std::vector<std::string> asciiMap;
-    asciiMap.push_back("000000000000");
-    asciiMap.push_back("010111011100");
-    asciiMap.push_back("010101110110");
-    asciiMap.push_back("010100000000");
-    asciiMap.push_back("010111111110");
-    asciiMap.push_back("010000001000");
-    asciiMap.push_back("011111111110");
-    asciiMap.push_back("000000000000");
+    asciiMap.push_back("0000000000000");
+    asciiMap.push_back("0101110111100");
+    asciiMap.push_back("0101011101110");
+    asciiMap.push_back("0101000000000");
+    asciiMap.push_back("0101111111110");
+    asciiMap.push_back("0100000010000");
+    asciiMap.push_back("0111111111110");
+    asciiMap.push_back("0000000000000");
 
     NodeMap nodeMap;
     nodeMap.Intialise(asciiMap, 50);
 
     Node* start = nodeMap.GetNode(1, 1);
-    Node* end = nodeMap.GetNode(10, 2);
+    Node* end = nodeMap.GetNode(11, 2);
     nodeMap.path = nodeMap.DijkstrasSearch(start, end);
 
     //std::vector<Node*> path = nodeMap.DijkstrasSearch(nodeMap.GetNode(1, 1), nodeMap.GetNode(1, 3));

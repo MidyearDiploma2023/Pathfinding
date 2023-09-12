@@ -25,15 +25,13 @@ void AIForGames::NodeMap::Intialise(std::vector<std::string> asciiMap, int cellS
 		}
 
 		for (int x = 0; x < width; x++) {
-			/* get the x-th character, or return an empty node if the string 
+			/* get the x-th character, or return an empty node if the string
 			isnt long enough*/
 			char tile = x < line.size() ? line[x] : emptySquare;
-			
+
 			//create a node for anthing but a '0' character 
 			nodes[x + width * y] = tile == emptySquare ? nullptr : new Node((x + 0.5f) * cellSize, (y + 0.5f) * cellSize);
-
 		}
-
 	}
 
 	/* Now loop over the nodes, creating connections between each node and its neighbour
@@ -59,24 +57,18 @@ void AIForGames::NodeMap::Intialise(std::vector<std::string> asciiMap, int cellS
 
 		}
 	}
-
-
 	path = DijkstrasSearch(GetNode(1, 1), GetNode(10, 2));
-
-
-
 }
 
 AIForGames::Node* AIForGames::NodeMap::GetNode(int x, int y)
 {
-	Node* node = x + width * y < mapSize ? nodes[x+ width * y] : nullptr;
+	Node* node = x + width * y < mapSize ? nodes[x + width * y] : nullptr;
 	return node;
 }
 void AIForGames::NodeMap::Draw()
 {
 	//Blue color for the walls
 	Color cellColor = BLUE;
-	
 	Color lineColor = RED;
 
 	for (int y = 0; y < height; y++) {
@@ -97,14 +89,8 @@ void AIForGames::NodeMap::Draw()
 		}
 	}
 
-
 	DrawRectangle((int)(path[0]->position.x - cellSize / 2), (int)(path[0]->position.y - cellSize / 2), (int)(cellSize - 1), (int)(cellSize - 1), MAGENTA);
-
-	DrawRectangle((int)(path[path.size()-1]->position.x - cellSize / 2), (int)(path[path.size()-1]->position.y - cellSize / 2), (int)(cellSize - 1), (int)(cellSize - 1), GREEN);
-
-
-
-
+	DrawRectangle((int)(path[path.size() - 1]->position.x - cellSize / 2), (int)(path[path.size() - 1]->position.y - cellSize / 2), (int)(cellSize - 1), (int)(cellSize - 1), GREEN);
 }
 
 std::vector<AIForGames::Node*> AIForGames::NodeMap::DijkstrasSearch(Node* start, Node* end)
@@ -118,7 +104,6 @@ std::vector<AIForGames::Node*> AIForGames::NodeMap::DijkstrasSearch(Node* start,
 	if (start == end) {
 		return path;
 	}
-
 
 	//Reset nodes to base state, ready for pathfinding algorithm
 	for (int i = 0; i < width * height; i++) {
@@ -139,13 +124,11 @@ std::vector<AIForGames::Node*> AIForGames::NodeMap::DijkstrasSearch(Node* start,
 		auto comp = [&](Node* a, Node* b) {return a->gScore > b->gScore; };
 		std::sort(openList.begin(), openList.end(), comp);
 
-
 		//Assign the next node in the open list to be our current node
 		currentNode = openList.back();
 		//Removes the top of the queue from the queue
 		openList.pop_back();
-		
-		
+
 		//Adds the currentNode to the closed list so we dont process again
 		closedList.push_back(currentNode);
 
@@ -161,7 +144,7 @@ std::vector<AIForGames::Node*> AIForGames::NodeMap::DijkstrasSearch(Node* start,
 			if (!inClosedList) {
 				float gscore = currentNode->gScore + currentNode->connections[i].cost;
 			}*/
-			
+
 			if (std::find(closedList.begin(), closedList.end(), currentNode->connections[i].target) == std::end(closedList))
 			{
 
@@ -172,8 +155,8 @@ std::vector<AIForGames::Node*> AIForGames::NodeMap::DijkstrasSearch(Node* start,
 					//Node is already in the open list with a valid score 
 					//so we need to compare the clculated score with the existing score 
 					//to find the shorter path
-				
-					if (gScore < currentNode->connections[i].target->gScore) 
+
+					if (gScore < currentNode->connections[i].target->gScore)
 					{
 						currentNode->connections[i].target->gScore = gScore;
 						currentNode->connections[i].target->previous = currentNode;
@@ -186,12 +169,8 @@ std::vector<AIForGames::Node*> AIForGames::NodeMap::DijkstrasSearch(Node* start,
 					currentNode->connections[i].target->previous = currentNode;
 					openList.push_back(currentNode->connections[i].target);
 				}
-
-
 			}
-
 		}
-
 	}
 
 	currentNode = end;
@@ -201,19 +180,13 @@ std::vector<AIForGames::Node*> AIForGames::NodeMap::DijkstrasSearch(Node* start,
 	}
 	std::reverse(path.begin(), path.end());
 	return path;
-
-
-
-
 }
 
 void AIForGames::NodeMap::DrawPath()
 {
 	if (path.empty()) return;
 	for (int i = 1; i < path.size(); i++) {
-
 		DrawLine(path[i]->position.x, path[i]->position.y, path[i - 1]->position.x, path[i - 1]->position.y, BLACK);
-
 	}
 }
 
@@ -236,32 +209,24 @@ AIForGames::NodeMap::~NodeMap()
 		}
 	}
 	delete[] nodes;
-
-
 }
 
 AIForGames::Node::Node(float x, float y)
 {
 	position.x = x;
 	position.y = y;
-
 }
 
 
 void AIForGames::Node::ConnectTo(Node* other, float cost)
 {
 	connections.push_back(Edge(other, cost));
-
 }
-
-
-
-
 
 AIForGames::Edge::Edge() : Edge(nullptr, 0)
 {
 }
 
-AIForGames::Edge::Edge(Node* target, float cost) : target{target}, cost{cost} 
+AIForGames::Edge::Edge(Node* target, float cost) : target{ target }, cost{ cost }
 {
 }
