@@ -13,6 +13,7 @@ namespace AIForGames
 		void Update(float deltaTime);
 		void GoToNode(Node* node);
 		void Draw();
+		void LateDraw();
 		void SetNode(Node* node);
 		void SetSpeed(float speed);
 		void SetColor(Color color);

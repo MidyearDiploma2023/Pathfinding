@@ -38,10 +38,13 @@ namespace AIForGames
 
     public:
         std::vector<Node*> path;
+        std::vector<Node*> allNodes; // no null pointers in this container
         int mapSize;
         void Intialise(std::vector <std::string> asciiMap, int cellSize);
 
         Node* GetNode(int x, int y);
+
+        Node* GetRandomNode();
 
         void Draw();
 

@@ -5,6 +5,7 @@ AIForGames::PathAgent::PathAgent(NodeMap* nodeMap)
 {
 	this->nodeMap = nodeMap;
 	m_currentIndex = 0;
+	m_currentNode = nullptr;
 	m_speed = 2.0f;
 	m_color = YELLOW;
 	m_position = glm::vec2(0, 0);
@@ -12,9 +13,14 @@ AIForGames::PathAgent::PathAgent(NodeMap* nodeMap)
 
 void AIForGames::PathAgent::Update(float deltaTime)
 {
-	if (m_path.empty())
+	if (deltaTime > 1)
 	{
-		FindRandomPath();
+		return;
+	}
+	if (m_path.size() == 0)
+	{
+		GoToNode(nodeMap->GetRandomNode());
+		//FindRandomPath();
 		return;
 	}
 
@@ -50,11 +56,16 @@ void AIForGames::PathAgent::GoToNode(Node* node)
 
 void AIForGames::PathAgent::Draw()
 {
-	DrawCircle((int)m_position.x, (int)m_position.y, 8, m_color);
+	
 	if (m_path.empty()) return;
 	for (int i = m_currentIndex + 1; i < m_path.size(); i++) {
 		DrawLine(m_path[i]->position.x, m_path[i]->position.y, m_path[i - 1]->position.x, m_path[i - 1]->position.y, m_color);
 	}
+}
+
+void AIForGames::PathAgent::LateDraw()
+{
+	DrawCircle((int)m_position.x, (int)m_position.y, 8, m_color);
 }
 
 void AIForGames::PathAgent::SetNode(Node* node)
