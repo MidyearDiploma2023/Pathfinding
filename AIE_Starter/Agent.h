@@ -25,6 +25,9 @@ namespace AIForGames
 		void SetTargetAgent(Agent* agent);
 		glm::vec2 GetPosition();
 		NodeMap* GetNodeMap();
+		void SetColor(Color c);
+		void SetSpeed(float s);
+		void Reset();
 	protected:
 	private:
 		PathAgent m_pathAgent;

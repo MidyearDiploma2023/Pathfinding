@@ -10,6 +10,7 @@ namespace AIForGames
 		this->nodeMap = nodeMap;
 		m_currentIndex = 0;
 		m_speed = 2.0f;
+		m_color = { 255,255,0,255 };
 	}
 
 	void PathAgent::Update(float deltaTime)
@@ -48,7 +49,7 @@ namespace AIForGames
 
 	void PathAgent::Draw()
 	{
-		DrawCircle((int)m_position.x, (int)m_position.y, 8, { 255,255,0,255 });
+		DrawCircle((int)m_position.x, (int)m_position.y, 8, m_color);
 		if (m_path.empty()) return;
 		for (int i = m_currentIndex + 1; i < m_path.size(); i++) {
 			DrawLine(m_path[i]->position.x, m_path[i]->position.y, m_path[i - 1]->position.x, m_path[i - 1]->position.y, GREEN);
@@ -73,5 +74,13 @@ namespace AIForGames
 	glm::vec2 PathAgent::GetPosition()
 	{
 		return m_position;
+	}
+	void PathAgent::Reset()
+	{
+		m_path.clear();
+	}
+	void PathAgent::SetColor(Color c)
+	{
+		m_color = c;
 	}
 }

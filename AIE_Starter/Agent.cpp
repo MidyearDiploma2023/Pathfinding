@@ -55,4 +55,16 @@ namespace AIForGames
 	{
 		return m_nodeMap;
 	}
+	void Agent::SetColor(Color c)
+	{
+		m_pathAgent.SetColor(c);
+	}
+	void Agent::SetSpeed(float s)
+	{
+		m_pathAgent.SetSpeed(s);
+	}
+	void Agent::Reset()
+	{
+		m_pathAgent.Reset();
+	}
 }

@@ -30,6 +30,7 @@
 #include "GoToPointBehaviour.h"
 #include "WanderBehaviour.h"
 #include "FollowBehaviour.h"
+#include "SelectorBehaviour.h"
 
 using namespace AIForGames;
 
@@ -66,10 +67,12 @@ int main(int argc, char* argv[])
 
     agent = new Agent(&nodeMap, new WanderBehaviour());
     agent->SetNode(nodeMap.GetRandomNode());
+    agent->SetSpeed(256);
     agents.push_back(agent);
     
-    agent = new Agent(&nodeMap, new FollowBehaviour());
+    agent = new Agent(&nodeMap, new SelectorBehaviour(new FollowBehaviour(), new WanderBehaviour()));
     agent->SetTargetAgent(agents[1]);
+    agent->SetSpeed(128);
     agent->SetNode(nodeMap.GetRandomNode());
     agents.push_back(agent);
 
