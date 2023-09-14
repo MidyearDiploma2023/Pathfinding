@@ -8,6 +8,7 @@ namespace AIForGames
 	class PathAgent
 	{
 	public:
+		//PathAgent() {}
 		PathAgent(NodeMap* nodeMap);
 		void Update(float deltaTime);
 		void GoToNode(Node* node);

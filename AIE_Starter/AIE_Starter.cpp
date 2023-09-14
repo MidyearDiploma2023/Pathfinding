@@ -26,6 +26,8 @@
 #include "raygui.h"
 #include "Pathfinding.h"
 #include "PathAgent.h"
+#include "Agent.h"
+#include "GoToPointBehaviour.h"
 
 using namespace AIForGames;
 
@@ -53,13 +55,11 @@ int main(int argc, char* argv[])
     NodeMap nodeMap;
     nodeMap.Intialise(asciiMap, 50);
 
+    Agent agent(&nodeMap, new GoToPointBehaviour());
     Node* start = nodeMap.GetNode(1, 1);
-    Node* end = nodeMap.GetNode(11, 2);
-
-    PathAgent agent = PathAgent(&nodeMap);
     agent.SetNode(start);
-    agent.SetSpeed(64);
-    agent.GoToNode(end);
+    /*Node* start = nodeMap.GetNode(1, 1);
+    Node* end = nodeMap.GetNode(11, 2);*/
 
     float time = (float)GetTime();
     float deltaTime;
@@ -71,21 +71,11 @@ int main(int argc, char* argv[])
         deltaTime = fTime - time;
         time = fTime;
         // Update
-        //----------------------------------------------------------------------------------
-        // TODO: Update your variables here
-        //----------------------------------------------------------------------------------
-        if (IsMouseButtonPressed(0)) {
-            Vector2 mousePos = GetMousePosition();
-            start = nodeMap.GetClosestNode(glm::vec2(mousePos.x, mousePos.y));
-            agent.GoToNode(start);
-        }
-        
         agent.Update(deltaTime);
-
         // Draw
         //----------------------------------------------------------------------------------
         BeginDrawing();
-
+        
         ClearBackground(BLACK);
         nodeMap.Draw();
         agent.Draw();
