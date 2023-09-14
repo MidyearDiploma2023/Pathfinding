@@ -22,8 +22,21 @@ namespace AIForGames
 		m_pathAgent.GoToNode(end);
 	}
 
+	void Agent::GoTo(Node* node)
+	{
+		m_pathAgent.GoToNode(node);
+	}
+
 	void Agent::SetNode(Node* node)
 	{
 		m_pathAgent.SetNode(node);
+	}
+	bool Agent::PathComplete()
+	{
+		return m_pathAgent.IsEmpty();
+	}
+	Node* Agent::GetRandomNode()
+	{
+		return m_nodeMap->GetRandomNode();
 	}
 }

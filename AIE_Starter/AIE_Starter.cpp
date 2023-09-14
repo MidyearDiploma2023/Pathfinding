@@ -28,6 +28,7 @@
 #include "PathAgent.h"
 #include "Agent.h"
 #include "GoToPointBehaviour.h"
+#include "WanderBehaviour.h"
 
 using namespace AIForGames;
 
@@ -55,9 +56,16 @@ int main(int argc, char* argv[])
     NodeMap nodeMap;
     nodeMap.Intialise(asciiMap, 50);
 
-    Agent agent(&nodeMap, new GoToPointBehaviour());
+    std::vector<Agent*> agents;
+
+    Agent* agent = new Agent(&nodeMap, new GoToPointBehaviour());
     Node* start = nodeMap.GetNode(1, 1);
-    agent.SetNode(start);
+    agent->SetNode(start);
+    agents.push_back(agent);
+
+    agent = new Agent(&nodeMap, new WanderBehaviour());
+    agent->SetNode(nodeMap.GetRandomNode());
+    agents.push_back(agent);
     /*Node* start = nodeMap.GetNode(1, 1);
     Node* end = nodeMap.GetNode(11, 2);*/
 
@@ -71,14 +79,23 @@ int main(int argc, char* argv[])
         deltaTime = fTime - time;
         time = fTime;
         // Update
-        agent.Update(deltaTime);
+
+        //agent.Update(deltaTime);
+
+        for (int i = 0; i < agents.size(); i++)
+        {
+            agents[i]->Update(deltaTime);
+        }
         // Draw
         //----------------------------------------------------------------------------------
         BeginDrawing();
         
         ClearBackground(BLACK);
         nodeMap.Draw();
-        agent.Draw();
+        for (int i = 0; i < agents.size(); i++)
+        {
+            agents[i]->Draw();
+        }
 
         EndDrawing();
         //----------------------------------------------------------------------------------
@@ -88,6 +105,11 @@ int main(int argc, char* argv[])
     //--------------------------------------------------------------------------------------   
     CloseWindow();        // Close window and OpenGL context
     //--------------------------------------------------------------------------------------
+
+    for (int i = 0; i < agents.size(); i++)
+    {
+        delete agents[i];
+    }
 
     return 0;
 }

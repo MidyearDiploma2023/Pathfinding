@@ -32,6 +32,9 @@ namespace AIForGames
 
 				//create a node for anthing but a '0' character 
 				nodes[x + width * y] = tile == emptySquare ? nullptr : new Node((x + 0.5f) * cellSize, (y + 0.5f) * cellSize);
+
+				if (nodes[x + width * y] != nullptr)
+					m_allNodes.push_back(nodes[x + width * y]);
 			}
 		}
 
@@ -62,6 +65,10 @@ namespace AIForGames
 	{
 		Node* node = x + width * y < mapSize ? nodes[x + width * y] : nullptr;
 		return node;
+	}
+	Node* NodeMap::GetRandomNode()
+	{
+		return m_allNodes[rand() % m_allNodes.size()];
 	}
 	void NodeMap::Draw()
 	{

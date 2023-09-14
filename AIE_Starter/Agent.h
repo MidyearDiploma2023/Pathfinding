@@ -17,7 +17,10 @@ namespace AIForGames
 		void Update(float deltaTime);
 		void Draw();
 		void GoTo(glm::vec2 point);
+		void GoTo(Node* node);
 		void SetNode(Node* node);
+		bool PathComplete();
+		Node* GetRandomNode();
 	protected:
 	private:
 		PathAgent m_pathAgent;
