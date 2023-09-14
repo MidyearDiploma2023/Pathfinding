@@ -16,6 +16,7 @@ namespace AIForGames
 		void SetNode(Node* node);
 		void SetSpeed(float speed);
 		bool IsEmpty();
+		glm::vec2 GetPosition();
 	protected:
 	private:
 		glm::vec2 m_position;

@@ -204,6 +204,11 @@ namespace AIForGames
 		return GetNode(i, j);
 	}
 
+	float NodeMap::GetCellSize()
+	{
+		return cellSize;
+	}
+
 	NodeMap::~NodeMap()
 	{
 		for (int i = 0; i < (width * height); i++) {

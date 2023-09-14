@@ -45,16 +45,12 @@ namespace AIForGames
         void Intialise(std::vector <std::string> asciiMap, int cellSize);
 
         Node* GetNode(int x, int y);
-
         Node* GetRandomNode();
-
         void Draw();
-
         std::vector<Node*> DijkstrasSearch(Node* start, Node* end);
-
         void DrawPath();
-
         Node* GetClosestNode(glm::vec2 worldPos);
+        float GetCellSize();
 
         ~NodeMap();
         

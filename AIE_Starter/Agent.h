@@ -21,11 +21,16 @@ namespace AIForGames
 		void SetNode(Node* node);
 		bool PathComplete();
 		Node* GetRandomNode();
+		Agent* GetTargetAgent();
+		void SetTargetAgent(Agent* agent);
+		glm::vec2 GetPosition();
+		NodeMap* GetNodeMap();
 	protected:
 	private:
 		PathAgent m_pathAgent;
 		Behaviour* m_current;
 		NodeMap* m_nodeMap;
+		Agent* m_targetAgent;
 		Color m_color;
 	};
 }

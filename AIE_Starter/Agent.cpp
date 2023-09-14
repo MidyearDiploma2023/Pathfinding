@@ -39,4 +39,20 @@ namespace AIForGames
 	{
 		return m_nodeMap->GetRandomNode();
 	}
+	Agent* Agent::GetTargetAgent()
+	{
+		return m_targetAgent;
+	}
+	void Agent::SetTargetAgent(Agent* agent)
+	{
+		m_targetAgent = agent;
+	}
+	glm::vec2 Agent::GetPosition()
+	{
+		return m_pathAgent.GetPosition();
+	}
+	NodeMap* Agent::GetNodeMap()
+	{
+		return m_nodeMap;
+	}
 }

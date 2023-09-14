@@ -43,7 +43,7 @@ namespace AIForGames
 	void PathAgent::GoToNode(Node* node)
 	{
 		m_path = nodeMap->DijkstrasSearch(m_currentNode, node);
-		m_currentIndex = 0;
+		m_currentIndex = 1;
 	}
 
 	void PathAgent::Draw()
@@ -69,5 +69,9 @@ namespace AIForGames
 	bool PathAgent::IsEmpty()
 	{
 		return m_path.empty();
+	}
+	glm::vec2 PathAgent::GetPosition()
+	{
+		return m_position;
 	}
 }
