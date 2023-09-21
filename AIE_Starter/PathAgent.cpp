@@ -43,7 +43,7 @@ namespace AIForGames
 
 	void PathAgent::GoToNode(Node* node)
 	{
-		m_path = nodeMap->DijkstrasSearch(m_currentNode, node);
+		m_path = nodeMap->AStarSearch(m_currentNode, node);
 		m_currentIndex = 1;
 	}
 

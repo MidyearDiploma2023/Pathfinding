@@ -136,22 +136,10 @@ namespace AIForGames
 
 			for (int i = 0; i < currentNode->connections.size(); i++)
 			{
-
-				/*bool inClosedList = false;
-				for (int s = 0; s < closedList.size(); s++) {
-					if (closedList[s] == currentNode->connections[i].target) {
-						inClosedList = true;
-					}
-				}
-				if (!inClosedList) {
-					float gscore = currentNode->gScore + currentNode->connections[i].cost;
-				}*/
-
 				if (std::find(closedList.begin(), closedList.end(), currentNode->connections[i].target) == std::end(closedList))
 				{
 
-					float hScore = glm::length(end->position - currentNode->position) / cellSize;
-					float gScore = currentNode->gScore + currentNode->connections[i].cost + hScore;
+					float gScore = currentNode->gScore + currentNode->connections[i].cost;
 
 					if (std::find(openList.begin(), openList.end(), currentNode->connections[i].target) != std::end(openList))
 					{
@@ -169,6 +157,92 @@ namespace AIForGames
 					else {
 
 						currentNode->connections[i].target->gScore = gScore;
+						currentNode->connections[i].target->previous = currentNode;
+						openList.push_back(currentNode->connections[i].target);
+					}
+				}
+			}
+		}
+
+		currentNode = end;
+		while (currentNode != nullptr) {
+			path.push_back(currentNode);
+			currentNode = currentNode->previous;
+		}
+		std::reverse(path.begin(), path.end());
+		return path;
+	}
+
+	std::vector<Node*> NodeMap::AStarSearch(Node* start, Node* end)
+	{
+		std::vector<Node*> path;
+		if (start == nullptr || end == nullptr) {
+			std::cout << "Start or end were nullptr" << std::endl;
+			return path;
+		}
+
+		if (start == end) {
+			return path;
+		}
+
+		//Reset nodes to base state, ready for pathfinding algorithm
+		for (int i = 0; i < width * height; i++) {
+			if (nodes[i] != nullptr) {
+				nodes[i]->previous = nullptr;
+				nodes[i]->gScore = 0;
+				nodes[i]->hScore = 0;
+				nodes[i]->fScore = 0;
+			}
+		}
+
+		std::vector<Node*> openList;
+		std::vector<Node*> closedList;
+		Node* currentNode = nullptr;
+
+		openList.push_back(start);
+
+		while (!openList.empty())
+		{
+			auto comp = [&](Node* a, Node* b) {return a->fScore > b->fScore; };
+			std::sort(openList.begin(), openList.end(), comp);
+
+			//Assign the next node in the open list to be our current node
+			currentNode = openList.back();
+			//Removes the top of the queue from the queue
+			openList.pop_back();
+
+			//Adds the currentNode to the closed list so we dont process again
+			closedList.push_back(currentNode);
+
+			for (int i = 0; i < currentNode->connections.size(); i++)
+			{
+				if (std::find(closedList.begin(), closedList.end(), currentNode->connections[i].target) == std::end(closedList))
+				{
+
+					float hScore = glm::length(end->position - currentNode->position) / cellSize;
+					float gScore = currentNode->gScore + currentNode->connections[i].cost;
+					float fScore = hScore + gScore;
+
+					if (std::find(openList.begin(), openList.end(), currentNode->connections[i].target) != std::end(openList))
+					{
+						//Node is already in the open list with a valid score 
+						//so we need to compare the clculated score with the existing score 
+						//to find the shorter path
+
+						if (gScore < currentNode->connections[i].target->gScore)
+						{
+							currentNode->connections[i].target->gScore = gScore;
+							currentNode->connections[i].target->hScore = hScore;
+							currentNode->connections[i].target->fScore = fScore;
+							currentNode->connections[i].target->previous = currentNode;
+						}
+
+					}
+					else {
+
+						currentNode->connections[i].target->gScore = gScore;
+						currentNode->connections[i].target->hScore = hScore;
+						currentNode->connections[i].target->fScore = fScore;
 						currentNode->connections[i].target->previous = currentNode;
 						openList.push_back(currentNode->connections[i].target);
 					}

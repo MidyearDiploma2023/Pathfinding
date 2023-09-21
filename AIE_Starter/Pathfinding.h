@@ -48,6 +48,7 @@ namespace AIForGames
         Node* GetRandomNode();
         void Draw();
         std::vector<Node*> DijkstrasSearch(Node* start, Node* end);
+        std::vector<Node*> AStarSearch(Node* start, Node* end);
         void DrawPath();
         Node* GetClosestNode(glm::vec2 worldPos);
         float GetCellSize();
